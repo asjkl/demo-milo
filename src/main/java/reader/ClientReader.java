@@ -2,6 +2,9 @@ package reader;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Semaphore;
+import java.util.function.BiConsumer;
 
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfig;
@@ -42,21 +45,56 @@ public class ClientReader {
                 .thenApply(OpcUaClient.class::cast); // cast result of connect from UaClient to OpcUaClient
     }
     
-    public static void main(String[] args) {
-	CompletableFuture<OpcUaClient> completableFuture =connect();
-	completableFuture.whenComplete((client, e) -> {
-            // called when the connect operation finished ... either way
+    public static void main(String[] args) throws InterruptedException {
+      final Semaphore s = new Semaphore(0);
+      connect()
+              .whenComplete((client, e) -> {
+                  // called when the connect operation finished ... either way
 
-            if (e == null) {
-                System.out.println("Connected");
-            } else {
-                System.err.println("Failed to connect");
-                e.printStackTrace();
-            }
-        })
-        .thenCompose(OpcUaClient::disconnect)
-        ;
+                  if (e == null) {
+                      System.out.println("Connected");
+                  } else {
+                      System.err.println("Failed to connect");
+                      e.printStackTrace();
+                  }
+              })
+              .thenCompose(OpcUaClient::disconnect)
+              .thenRun(s::release); // wake up s.acquire() below
 
+      System.out.println("Wait for completion");
+      s.acquire(); // what could could wrong?
+      System.out.println("Bye bye");
+	
+	// TODO CONNESSIONE SINCRONA
+//	OpcUaClient opcUaClient = null;
+//	try {
+//	     opcUaClient =  connectSync();
+//	     System.out.println(opcUaClient.toString());
+//	} catch (InterruptedException | ExecutionException | UaException e) {
+//	    e.printStackTrace();
+//	}
+	
+    }
+    
+    public static OpcUaClient createClientSync() throws InterruptedException, ExecutionException, UaException {
+        final String endpoint = String.format("opc.tcp://%s:%s", Constants.HOST, Constants.PORT);
+
+        final List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints(endpoint)
+                .get();
+
+        return OpcUaClient.create(buildConfiguration(endpoints));
+    }
+
+    public static OpcUaClient connectSync() throws InterruptedException, ExecutionException, UaException {
+	System.out.println("Init");
+	
+	final OpcUaClient client = createClientSync();
+
+        client.connect()
+                .get();
+        System.out.println("End");
+
+        return client;
     }
 
 }
