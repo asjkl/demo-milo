@@ -16,7 +16,7 @@ import org.eclipse.milo.opcua.stack.core.types.structured.EndpointDescription;
 import utils.Constants;
 
 
-public class AsynchrnousClient {
+public class AsynchronousClient {
     
     
     private static OpcUaClientConfig buildConfiguration(final List<EndpointDescription> endpoints) {

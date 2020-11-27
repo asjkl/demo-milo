@@ -19,7 +19,7 @@ public class ClientReader {
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException {
 	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
 	
-	OpcUaClient opcUaClient = SynchrnousClient.connect(endpoint);
+	OpcUaClient opcUaClient = SynchronousClient.connect(endpoint);
 	
 	String spazio=" ";
 	AddressSpace addressSpace = opcUaClient.getAddressSpace();
