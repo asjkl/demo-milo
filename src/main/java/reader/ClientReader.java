@@ -1,100 +1,49 @@
 package reader;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Semaphore;
-import java.util.function.BiConsumer;
 
+import org.eclipse.milo.opcua.sdk.client.AddressSpace;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
-import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfig;
-import org.eclipse.milo.opcua.sdk.client.api.config.OpcUaClientConfigBuilder;
-import org.eclipse.milo.opcua.stack.client.DiscoveryClient;
+import org.eclipse.milo.opcua.sdk.client.nodes.UaNode;
+import org.eclipse.milo.opcua.sdk.client.nodes.UaVariableNode;
+import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.UaException;
-import org.eclipse.milo.opcua.stack.core.types.structured.EndpointDescription;
+import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
+import org.eclipse.milo.opcua.stack.core.types.enumerated.NodeClass;
 
 import utils.Constants;
 
-
 public class ClientReader {
     
-    
-    private static OpcUaClientConfig buildConfiguration(final List<EndpointDescription> endpoints) {
-        final OpcUaClientConfigBuilder cfg = new OpcUaClientConfigBuilder();
-        cfg.setEndpoint(endpoints.get(0));
-        return cfg.build();
-    }
-    
-    public static CompletableFuture<OpcUaClient> createClient() {
-        final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
-
-        return DiscoveryClient
-                .getEndpoints(endpoint) // look up endpoints from remote
-                .thenCompose(endpoints -> {
-                    try {
-                        return CompletableFuture.completedFuture(OpcUaClient.create(buildConfiguration(endpoints)));
-                    } catch (final UaException e) {
-                        return CompletableFuture.failedFuture(e);
-                    }
-                });
-    }
-    
-    public static CompletableFuture<OpcUaClient> connect() {
-        return createClient()
-                .thenCompose(OpcUaClient::connect) // trigger connect
-                .thenApply(OpcUaClient.class::cast); // cast result of connect from UaClient to OpcUaClient
-    }
-    
-    public static void main(String[] args) throws InterruptedException {
-      final Semaphore s = new Semaphore(0);
-      connect()
-              .whenComplete((client, e) -> {
-                  // called when the connect operation finished ... either way
-
-                  if (e == null) {
-                      System.out.println("Connected");
-                  } else {
-                      System.err.println("Failed to connect");
-                      e.printStackTrace();
-                  }
-              })
-              .thenCompose(OpcUaClient::disconnect)
-              .thenRun(s::release); // wake up s.acquire() below
-
-      System.out.println("Wait for completion");
-      s.acquire(); // what could could wrong?
-      System.out.println("Bye bye");
+    public static void main(String[] args) throws UaException, InterruptedException, ExecutionException {
+	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
 	
-	// TODO CONNESSIONE SINCRONA
-//	OpcUaClient opcUaClient = null;
-//	try {
-//	     opcUaClient =  connectSync();
-//	     System.out.println(opcUaClient.toString());
-//	} catch (InterruptedException | ExecutionException | UaException e) {
-//	    e.printStackTrace();
-//	}
+	OpcUaClient opcUaClient = SynchrnousClient.connect(endpoint);
 	
+	String spazio=" ";
+	AddressSpace addressSpace = opcUaClient.getAddressSpace();
+	UaNode serverNode = addressSpace.getNode(Identifiers.Server);
+	broswe(serverNode, addressSpace, spazio);
+	
+
     }
     
-    public static OpcUaClient createClientSync() throws InterruptedException, ExecutionException, UaException {
-        final String endpoint = String.format("opc.tcp://%s:%s", Constants.HOST, Constants.PORT);
-
-        final List<EndpointDescription> endpoints = DiscoveryClient.getEndpoints(endpoint)
-                .get();
-
-        return OpcUaClient.create(buildConfiguration(endpoints));
+    public static void broswe(UaNode nodo, AddressSpace addressSpace, String spazio) throws UaException {
+	    List<UaNode> nodes = (List<UaNode>) addressSpace.browseNodes(nodo);
+	    
+	    for (UaNode uaNode : nodes) {
+		stampa(uaNode, spazio);
+		broswe(uaNode, addressSpace, spazio+" ");
+	    }
     }
-
-    public static OpcUaClient connectSync() throws InterruptedException, ExecutionException, UaException {
-	System.out.println("Init");
-	
-	final OpcUaClient client = createClientSync();
-
-        client.connect()
-                .get();
-        System.out.println("End");
-
-        return client;
+    
+    public static void stampa(UaNode node, String spazio) throws UaException {
+	if(node.getNodeClass().equals(NodeClass.Variable)) {
+	    System.out.format("%-60s %-15s %s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(), node.getNodeId().getIdentifier().toString(),((UaVariableNode)node).readValue().getValue().getValue());
+	    
+	}else {
+	    System.out.format("%-60s %-15s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(), node.getNodeId().getIdentifier().toString()," "," ");
+	}
     }
-
 }
