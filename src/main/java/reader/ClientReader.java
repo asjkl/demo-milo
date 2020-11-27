@@ -23,8 +23,10 @@ public class ClientReader {
 	
 	String spazio=" ";
 	AddressSpace addressSpace = opcUaClient.getAddressSpace();
-	UaNode serverNode = addressSpace.getNode(Identifiers.Server);
+	UaNode serverNode = addressSpace.getNode(Identifiers.RootFolder);
 	broswe(serverNode, addressSpace, spazio);
+	
+	opcUaClient.disconnect();
 	
 
     }
@@ -40,10 +42,10 @@ public class ClientReader {
     
     public static void stampa(UaNode node, String spazio) throws UaException {
 	if(node.getNodeClass().equals(NodeClass.Variable)) {
-	    System.out.format("%-60s %-15s %s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(), node.getNodeId().getIdentifier().toString(),((UaVariableNode)node).readValue().getValue().getValue());
+	    System.out.format("%-60s %-15s %s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(),node.getWriteMask()+":"+ node.getBrowseName().getNamespaceIndex()+":"+node.getNodeId().getIdentifier().toString(),((UaVariableNode)node).readValue().getValue().getValue());
 	    
 	}else {
-	    System.out.format("%-60s %-15s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(), node.getNodeId().getIdentifier().toString()," "," ");
+	    System.out.format("%-60s %-15s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(),node.getWriteMask()+":"+ node.getBrowseName().getNamespaceIndex()+":"+node.getNodeId().getIdentifier().toString()," "," ");
 	}
     }
 }
