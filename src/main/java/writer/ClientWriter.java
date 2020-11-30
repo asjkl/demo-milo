@@ -37,7 +37,7 @@ public class ClientWriter {
 	System.out.println(testNode.readValue().getValue().getValue());
 	
 	// Write the Value attribute; throws UaException if the write fails
-	testNode.writeValue(new Variant(42));
+	testNode.writeValue(new Variant(-1));
 	
 	System.out.println(testNode.readValue().getValue().getValue());
 	

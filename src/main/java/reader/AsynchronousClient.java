@@ -13,6 +13,7 @@ import org.eclipse.milo.opcua.stack.client.DiscoveryClient;
 import org.eclipse.milo.opcua.stack.core.UaException;
 import org.eclipse.milo.opcua.stack.core.types.structured.EndpointDescription;
 
+import subscribe.ClientSubscriber;
 import utils.Constants;
 
 
@@ -53,6 +54,12 @@ public class AsynchronousClient {
 
                   if (e == null) {
                       System.out.println("Connected");
+//                      try {
+//			ClientSubscriber sub = new ClientSubscriber(client);
+//			sub.run();
+//		    } catch (UaException e1) {
+//			e1.printStackTrace();
+//		    }
                   } else {
                       System.err.println("Failed to connect");
                       e.printStackTrace();
