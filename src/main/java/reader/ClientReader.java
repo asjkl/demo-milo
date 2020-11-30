@@ -19,19 +19,24 @@ public class ClientReader {
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException {
 	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
 	
+	ClientReader reader = new ClientReader();
+	
 	OpcUaClient opcUaClient = SynchronousClient.connect(endpoint);
 	
-	String spazio=" ";
+	String spazio="";
 	AddressSpace addressSpace = opcUaClient.getAddressSpace();
 	UaNode serverNode = addressSpace.getNode(Identifiers.RootFolder);
-	broswe(serverNode, addressSpace, spazio);
+	
+	System.out.format("%-60s %-15s %-15s %-15s %-15s%n", "NodeName", "NodeType", "NameSpaceIndex", "Value", "NodeId");
+	System.out.println("-----------------------------------------------------------------------------------------------------------------");
+	reader.broswe(serverNode, addressSpace, spazio);
 	
 	opcUaClient.disconnect();
 	
 
     }
     
-    public static void broswe(UaNode nodo, AddressSpace addressSpace, String spazio) throws UaException {
+    public void broswe(UaNode nodo, AddressSpace addressSpace, String spazio) throws UaException {
 	    List<UaNode> nodes = (List<UaNode>) addressSpace.browseNodes(nodo);
 	    
 	    for (UaNode uaNode : nodes) {
@@ -40,12 +45,32 @@ public class ClientReader {
 	    }
     }
     
-    public static void stampa(UaNode node, String spazio) throws UaException {
+    public void stampa(UaNode node, String spazio) throws UaException {
+	String nodeName = node.getBrowseName().getName().toString();
+	String nodeType = node.getNodeClass().toString();
+	//String nodeWritable = node.getWriteMask().toString();
+	String nameSpaceIndex = node.getBrowseName().getNamespaceIndex().toString();
+	String nodeId = node.getNodeId().getIdentifier().toString();
+	Object value = null;
+	
 	if(node.getNodeClass().equals(NodeClass.Variable)) {
-	    System.out.format("%-60s %-15s %s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(),node.getWriteMask()+":"+ node.getBrowseName().getNamespaceIndex()+":"+node.getNodeId().getIdentifier().toString(),((UaVariableNode)node).readValue().getValue().getValue());
-	    
-	}else {
-	    System.out.format("%-60s %-15s %s%n", spazio+node.getBrowseName().getName(),node.getNodeClass().toString(),node.getWriteMask()+":"+ node.getBrowseName().getNamespaceIndex()+":"+node.getNodeId().getIdentifier().toString()," "," ");
-	}
+    	    value = ((UaVariableNode)node).readValue().getValue().getValue();
+    	    System.out.format("%-60s %-15s %-15s %-15s %-15s%n", 
+    		    spazio+nodeName,
+    		    nodeType,
+    		    /*nodeWritable,*/
+    		    nameSpaceIndex, 
+    		    value,
+    		    nodeId);
+    	    
+         }else {
+    	    System.out.format("%-60s %-15s %-15s %-15s %-15s%n", 
+    		    spazio+nodeName,
+    		    nodeType,
+    		    /*nodeWritable,*/ 
+    		    nameSpaceIndex,
+    		    "-",
+    		    nodeId);
+    	}
     }
 }
