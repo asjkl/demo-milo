@@ -9,7 +9,6 @@ import org.eclipse.milo.opcua.sdk.client.nodes.UaNode;
 import org.eclipse.milo.opcua.sdk.client.nodes.UaVariableNode;
 import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.UaException;
-import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.NodeClass;
 
 import utils.Constants;
@@ -20,15 +19,18 @@ public class ClientReader {
 	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
 	
 	ClientReader reader = new ClientReader();
-	
+	//Creiamo una connessione sincrona con il server OPC
 	OpcUaClient opcUaClient = SynchronousClient.connect(endpoint);
 	
 	String spazio="";
+	//Ricaviamo l'address space che contiene tutti i nodi del server
 	AddressSpace addressSpace = opcUaClient.getAddressSpace();
+	//Dal address space prendiamo il nodo da cui vogliamo partire (per esempio nodo radice)
 	UaNode serverNode = addressSpace.getNode(Identifiers.RootFolder);
 	
 	System.out.format("%-60s %-15s %-15s %-15s %-15s%n", "NodeName", "NodeType", "NameSpaceIndex", "Value", "NodeId");
 	System.out.println("-----------------------------------------------------------------------------------------------------------------");
+	//Esploriamo l'address space a partire dal nodo scelto
 	reader.broswe(serverNode, addressSpace, spazio);
 	
 	opcUaClient.disconnect();
@@ -36,8 +38,9 @@ public class ClientReader {
 
     }
     
+    //Ricorsivamente si vanno ad esplorare tutti i nodi figli partendo dal nodo padre
     public void broswe(UaNode nodo, AddressSpace addressSpace, String spazio) throws UaException {
-	    List<UaNode> nodes = (List<UaNode>) addressSpace.browseNodes(nodo);
+	List<UaNode> nodes = (List<UaNode>) addressSpace.browseNodes(nodo);
 	    
 	    for (UaNode uaNode : nodes) {
 		stampa(uaNode, spazio);
@@ -52,8 +55,9 @@ public class ClientReader {
 	String nameSpaceIndex = node.getBrowseName().getNamespaceIndex().toString();
 	String nodeId = node.getNodeId().getIdentifier().toString();
 	Object value = null;
-	
+	//Se il nodo è di tipo variabile possiamo recuperare il valore
 	if(node.getNodeClass().equals(NodeClass.Variable)) {
+	    //Lettura del valore di una variabile
     	    value = ((UaVariableNode)node).readValue().getValue().getValue();
     	    System.out.format("%-60s %-15s %-15s %-15s %-15s%n", 
     		    spazio+nodeName,

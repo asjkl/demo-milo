@@ -3,23 +3,15 @@ package subscribe;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.eclipse.milo.opcua.sdk.client.AddressSpace;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedDataItem;
 import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedEventItem;
 import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedSubscription;
 import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedSubscription.ChangeListener;
-import org.eclipse.milo.opcua.stack.core.AttributeId;
-import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.UaException;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
-import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
-import org.eclipse.milo.opcua.stack.core.types.structured.ContentFilter;
-import org.eclipse.milo.opcua.stack.core.types.structured.EventFilter;
-import org.eclipse.milo.opcua.stack.core.types.structured.SimpleAttributeOperand;
-
 import reader.SynchronousClient;
 import utils.Constants;
 
@@ -31,14 +23,21 @@ public class ClientSubscriber implements Runnable {
     
     public ClientSubscriber(OpcUaClient opcUaClient) throws UaException {
 	this.opcUaClient=opcUaClient;
+	//Creiamo la configurazione necessaria al monitoraggio
 	createConfiguration(opcUaClient);
     } 
     
     private void createConfiguration(OpcUaClient opcUaClient) throws UaException {
+	//Creiamo il punto di accesso per monitorare gli elementi e la creazione delle sottoscrizioni
+	//il secondo parametro è opzionale ed indica quanto tempo bisogna attendere per richiedere l'aggiornamento dell'elemento
 	subscription = ManagedSubscription.create(opcUaClient, 2000);
+	//Aggiungiamo al gestore di sottoscrizioni l'elemento da monitorare
 	ManagedDataItem dataItem = subscription.createDataItem(new NodeId(2, "HelloWorld/ScalarTypes/Int32"));
 	
+	//Aggiungiamo al gestore di sottoscrizioni le reazioni a determinati eventi
 	subscription.addChangeListener(new ChangeListener() {
+	    	//Quando l'elemento (o gli elementi) da monitorare cambiano e passa il tempo di pulling
+	    	//stampiamo il valore aggiornato
     	        @Override
     	        public void onDataReceived(List<ManagedDataItem> dataItems, List<DataValue> dataValues) {
     	            System.out.println("->"+dataValues.get(0).getValue().getValue());           
@@ -46,7 +45,7 @@ public class ClientSubscriber implements Runnable {
     	        	exit = true;
     	            }
     	        }
-    	        
+    	        //Reazione ad un evento (non indagato)
     	        @Override
     		public void onEventReceived(List<ManagedEventItem> eventItems, List<Variant[]> eventFields) {
     	            System.out.println("2");          
@@ -87,14 +86,16 @@ public class ClientSubscriber implements Runnable {
 
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException {
 	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
-
+	//Creiamo una connessione sincrona con il server OPC
 	OpcUaClient opcUaClient = SynchronousClient.connect(endpoint);
+	//Viene istanziato il thread e fatto partire
 	ClientSubscriber subscriptionThread =new ClientSubscriber(opcUaClient);
 	subscriptionThread.run();
 	
     }
 
     private void delete() throws UaException {
+	//Chiudiamo tutte le sottoscrizioni, altrimenti il server continuerà a restituire i cambiamenti
 	subscription.delete();
 	opcUaClient.disconnect();
     }

@@ -1,24 +1,14 @@
 package writer;
 
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import org.eclipse.milo.opcua.sdk.client.AddressSpace;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
-import org.eclipse.milo.opcua.sdk.client.nodes.UaNode;
 import org.eclipse.milo.opcua.sdk.client.nodes.UaVariableNode;
-import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.UaException;
-import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
-import org.eclipse.milo.opcua.stack.core.types.builtin.StatusCode;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 
-import com.google.common.collect.ImmutableList;
-
-import reader.ClientReader;
 import reader.SynchronousClient;
 import utils.Constants;
 
@@ -26,19 +16,20 @@ public class ClientWriter {
 
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException  {
 	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
-
+	//Creiamo una connessione sincrona con il server OPC
 	OpcUaClient opcUaClient = SynchronousClient.connect(endpoint);
+	//Ricaviamo l'address space che contiene tutti i nodi del server
 	AddressSpace addressSpace = opcUaClient.getAddressSpace();
-	
+	//Prendiamo il nodo variabile attraverso l'utilizzo di namespace e id
 	UaVariableNode testNode = (UaVariableNode) addressSpace.getNode(
 		    new NodeId(2, "HelloWorld/ScalarTypes/Int32")
 		);
-	
+	//Stampiamo il valore del nodo prima della scrittura
 	System.out.println(testNode.readValue().getValue().getValue());
 	
-	// Write the Value attribute; throws UaException if the write fails
+	//Scriviamo il valore del nodo variabile (in caso di errori viene sollevata un'eccezione)
 	testNode.writeValue(new Variant(-1));
-	
+	//Stampiamo il valore del nodo dopo la scrittura
 	System.out.println(testNode.readValue().getValue().getValue());
 	
 	opcUaClient.disconnect();
