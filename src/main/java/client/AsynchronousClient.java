@@ -1,4 +1,4 @@
-package reader;
+package client;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -48,6 +48,7 @@ public class AsynchronousClient {
     
     public static void main(String[] args) throws InterruptedException, UaException {
       final Semaphore s = new Semaphore(0);
+      
       //Viene creato un OpcUaClient a partire da un URL e da un endpoint,
       //il thread principale continua il resto delle operazioni mentre la connessione viene stabilita in modo asincrono
       connect()
@@ -71,6 +72,7 @@ public class AsynchronousClient {
               .thenRun(s::release);
 
       System.out.println("Wait for completion");
+     
       //se la connessione non è stata ancora stabilita il thread principale attende che l'operazione sia conclusa
       s.acquire();
       System.out.println("Bye bye");
