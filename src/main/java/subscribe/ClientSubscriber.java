@@ -9,13 +9,19 @@ import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedDataItem;
 import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedEventItem;
 import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedSubscription;
 import org.eclipse.milo.opcua.sdk.client.subscriptions.ManagedSubscription.ChangeListener;
+import org.eclipse.milo.opcua.stack.core.AttributeId;
+import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.UaException;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
+import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.MonitoringMode;
+import org.eclipse.milo.opcua.stack.core.types.structured.ContentFilter;
+import org.eclipse.milo.opcua.stack.core.types.structured.EventFilter;
 import org.eclipse.milo.opcua.stack.core.types.structured.ModifySubscriptionResponse;
+import org.eclipse.milo.opcua.stack.core.types.structured.SimpleAttributeOperand;
 
 import client.SynchronousClient;
 import utils.Constants;
@@ -81,11 +87,18 @@ public class ClientSubscriber implements Runnable {
     	        //Reazione ad un evento (non indagato)
     	        @Override
     		public void onEventReceived(List<ManagedEventItem> eventItems, List<Variant[]> eventFields) {
-    	            System.out.println("2");          
+    	            for(int a=0 ; a<eventFields.size(); a++) {
+    	        	for(int b=0; b<eventFields.get(a).length; b++) {
+    	        	    if(eventFields.get(a)[2] != null) {
+    	        		System.out.println("Message: "+((Variant)eventFields.get(a)[2]).getValue());
+    	        	    }
+    	        	}
+    	            }
+    	            System.out.println();
     		}
     	    });
 	
-	/*EventFilter eventFilter = new EventFilter(
+	EventFilter eventFilter = new EventFilter(
 	    new SimpleAttributeOperand[]{
 	        new SimpleAttributeOperand(
 	            Identifiers.BaseEventType,
@@ -106,8 +119,10 @@ public class ClientSubscriber implements Runnable {
 	    new ContentFilter(null)
 	);
 
-        ManagedEventItem eventItem = subscription.createEventItem(new NodeId(2, "HelloWorld/ScalarTypes/Int32"), eventFilter);
-        eventItem.addEventValueListener(new ManagedEventItem.EventValueListener() {
+        ManagedEventItem eventItem = subscription.createEventItem(Identifiers.Server, eventFilter);
+        
+        
+        /*eventItem.addEventValueListener(new ManagedEventItem.EventValueListener() {
         @Override
         public void onEventValueReceived(ManagedEventItem item, Variant[] eventValues) {
         	System.out.println("3");          
