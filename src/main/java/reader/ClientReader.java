@@ -35,7 +35,7 @@ public class ClientReader {
 	//Dal address space prendiamo il nodo da cui vogliamo partire (per esempio nodo radice)
 	UaNode serverNode = addressSpace.getNode( new NodeId(namespace, nodeId));
 	
-	System.out.format("%-60s %-15s %-15s %-15s %-15s%n", "NodeName", "NodeType","NodeWritable", "NameSpaceIndex", "Value", "NodeId");
+	System.out.format("%-60s %-15s %-15s %-15s %-15s %-15s%n", "NodeName", "NodeType","NodeWritable", "NameSpaceIndex", "NodeId", "Value");
 	System.out.println("-----------------------------------------------------------------------------------------------------------------");
 	
 	//Esploriamo l'address space a partire dal nodo scelto
@@ -74,22 +74,22 @@ public class ClientReader {
     	    Set<AccessLevel> accessLevel = AccessLevel.fromValue(((UaVariableNode)node).getAccessLevel());
     	    nodeWritable=accessLevel.contains(AccessLevel.CurrentWrite);
     	   
-    	    System.out.format("%-60s %-15s %-15s %-15s %-15s%n", 
+    	    System.out.format("%-60s %-15s %-15s %-15s %-15s %-15%n", 
     		    spazio+nodeName,
     		    nodeType,
     		    nodeWritable,
     		    nameSpaceIndex, 
-    		    value,
-    		    nodeId);
+    		    nodeId,
+    		    value);
     	    
          }else {
-    	    System.out.format("%-60s %-15s %-15s %-15s %-15s%n", 
+    	    System.out.format("%-60s %-15s %-15s %-15s %-15s %-15%n", 
     		    spazio+nodeName,
     		    nodeType,
     		    nodeWritable, 
     		    nameSpaceIndex,
-    		    "-",
-    		    nodeId);
+    		    nodeId,
+    		    "-");
     	}
     }
 }
