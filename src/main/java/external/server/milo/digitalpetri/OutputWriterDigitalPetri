@@ -1,0 +1,21 @@
+11:58:56,754 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+11:58:56,758 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+11:58:56,760 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/C:/Users/Giovanni/Desktop/Rigel/workspace/milo-master/milo-examples/server-examples/target/classes/logback.xml]
+11:58:57,062 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+11:58:57,118 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+11:58:57,126 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+11:58:57,347 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+11:58:57,347 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+11:58:57,347 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+11:58:57,350 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+11:58:57,350 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+11:58:57,351 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+11:58:57,354 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@13e39c73 - Registering current configuration as safe fallback point
+
+11:58:58.047 [main] INFO  o.e.m.opcua.sdk.client.OpcUaClient - Eclipse Milo OPC UA Stack version: 0.5.3
+11:58:58.058 [main] INFO  o.e.m.opcua.sdk.client.OpcUaClient - Eclipse Milo OPC UA Client SDK version: 0.5.4-SNAPSHOT
+11:59:01.838 [NonceUtilSecureRandom] INFO  o.e.m.o.stack.core.util.NonceUtil - SecureRandom seeded in 0ms.
+Connect
+NodeName                                                     NodeType        NodeWritable    NameSpaceIndex  NodeId          Value          
+-----------------------------------------------------------------------------------------------------------------
+EnabledFlag                                                  Variable        true            0               2294            true           
