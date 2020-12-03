@@ -74,7 +74,7 @@ public class ClientReader {
     	    Set<AccessLevel> accessLevel = AccessLevel.fromValue(((UaVariableNode)node).getAccessLevel());
     	    nodeWritable=accessLevel.contains(AccessLevel.CurrentWrite);
     	   
-    	    System.out.format("%-60s %-15s %-15s %-15s %-15s %-15%n", 
+    	    System.out.format("%-60s %-15s %-15s %-15s %-15s %-15s%n", 
     		    spazio+nodeName,
     		    nodeType,
     		    nodeWritable,
@@ -83,7 +83,7 @@ public class ClientReader {
     		    value);
     	    
          }else {
-    	    System.out.format("%-60s %-15s %-15s %-15s %-15s %-15%n", 
+    	    System.out.format("%-60s %-15s %-15s %-15s %-15s %-15s%n", 
     		    spazio+nodeName,
     		    nodeType,
     		    nodeWritable, 
