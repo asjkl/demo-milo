@@ -1,0 +1,95 @@
+16:07:57,961 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+16:07:57,964 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+16:07:57,966 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/C:/Users/Giovanni/Desktop/Rigel/workspace/milo-master/milo-examples/server-examples/target/classes/logback.xml]
+16:07:58,304 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+16:07:58,381 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+16:07:58,390 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+16:07:58,602 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+16:07:58,602 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+16:07:58,602 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+16:07:58,604 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+16:07:58,604 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+16:07:58,605 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+16:07:58,607 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@13e39c73 - Registering current configuration as safe fallback point
+
+16:07:59.726 [main] INFO  o.e.m.opcua.sdk.client.OpcUaClient - Eclipse Milo OPC UA Stack version: 0.5.3
+16:07:59.744 [main] INFO  o.e.m.opcua.sdk.client.OpcUaClient - Eclipse Milo OPC UA Client SDK version: 0.5.4-SNAPSHOT
+16:08:02.875 [NonceUtilSecureRandom] INFO  o.e.m.o.stack.core.util.NonceUtil - SecureRandom seeded in 1ms.
+Connect
+NodeName                                                     NodeType        NodeWritable    NameSpaceIndex  NodeId          Value          
+-----------------------------------------------------------------------------------------------------------------
+AirConditioner_1                                             Object          false           3               AirConditioner_1 -              
+State                                                        Variable        false           3               AirConditioner_1.State 0              
+StateCondition                                               Object          false           3               AirConditioner_1.StateCondition -              
+ EventId                                                     Variable        false           0               AirConditioner_1.StateCondition.EventId ByteString{bytes=[50, 45, -107, -3, -52, 88, -120, 65, -122, -124, -111, 28, 12, 26, -59, 27]}
+ EventType                                                   Variable        false           0               AirConditioner_1.StateCondition.EventType NodeId{ns=0, id=10637}
+ SourceNode                                                  Variable        false           0               AirConditioner_1.StateCondition.SourceNode NodeId{ns=3, id=AirConditioner_1}
+ SourceName                                                  Variable        false           0               AirConditioner_1.StateCondition.SourceName AirConditioner_1
+ Time                                                        Variable        false           0               AirConditioner_1.StateCondition.Time DateTime{utcTime=132511963488200709, javaDate=Mon Nov 30 08:52:28 CET 2020}
+ ReceiveTime                                                 Variable        false           0               AirConditioner_1.StateCondition.ReceiveTime DateTime{utcTime=132511963488200709, javaDate=Mon Nov 30 08:52:28 CET 2020}
+ Message                                                     Variable        false           0               AirConditioner_1.StateCondition.Message LocalizedText{text=State of AirConditioner_1 changed to OFF, locale=en}
+ Severity                                                    Variable        false           0               AirConditioner_1.StateCondition.Severity 500            
+ BranchId                                                    Variable        false           0               AirConditioner_1.StateCondition.BranchId NodeId{ns=0, id=0}
+ ClientUserId                                                Variable        false           0               AirConditioner_1.StateCondition.ClientUserId                
+ Comment                                                     Variable        false           0               AirConditioner_1.StateCondition.Comment LocalizedText{text=null, locale=null}
+  SourceTimestamp                                            Variable        false           0               AirConditioner_1.StateCondition.Comment.SourceTimestamp DateTime{utcTime=0, javaDate=Mon Jan 01 01:00:00 CET 1601}
+ ConditionClassId                                            Variable        false           0               AirConditioner_1.StateCondition.ConditionClassId NodeId{ns=0, id=11164}
+ ConditionClassName                                          Variable        false           0               AirConditioner_1.StateCondition.ConditionClassName LocalizedText{text=ProcessConditionClassType, locale=}
+ ConditionName                                               Variable        false           0               AirConditioner_1.StateCondition.ConditionName StateCondition 
+ LastSeverity                                                Variable        false           0               AirConditioner_1.StateCondition.LastSeverity 0              
+  SourceTimestamp                                            Variable        false           0               AirConditioner_1.StateCondition.LastSeverity.SourceTimestamp DateTime{utcTime=0, javaDate=Mon Jan 01 01:00:00 CET 1601}
+ Quality                                                     Variable        false           0               AirConditioner_1.StateCondition.Quality StatusCode{name=Good, value=0x00000000, quality=good}
+  SourceTimestamp                                            Variable        false           0               AirConditioner_1.StateCondition.Quality.SourceTimestamp DateTime{utcTime=0, javaDate=Mon Jan 01 01:00:00 CET 1601}
+ Retain                                                      Variable        false           0               AirConditioner_1.StateCondition.Retain true           
+ AddComment                                                  Method          false           0               9029            -              
+  InputArguments                                             Variable        false           0               9030            [Lorg.eclipse.milo.opcua.stack.core.types.builtin.ExtensionObject;@6411d3c8
+ Disable                                                     Method          false           0               9028            -              
+ Enable                                                      Method          false           0               9027            -              
+ AckedState                                                  Variable        false           0               AirConditioner_1.StateCondition.AckedState LocalizedText{text=Unacknowledged, locale=en}
+  Id                                                         Variable        false           0               AirConditioner_1.StateCondition.AckedState.Id false          
+  TransitionTime                                             Variable        false           0               AirConditioner_1.StateCondition.AckedState.TransitionTime DateTime{utcTime=132511963488200709, javaDate=Mon Nov 30 08:52:28 CET 2020}
+ Acknowledge                                                 Method          false           0               9111            -              
+  InputArguments                                             Variable        false           0               9112            [Lorg.eclipse.milo.opcua.stack.core.types.builtin.ExtensionObject;@2116b68b
+ Confirm                                                     Method          false           0               9113            -              
+  InputArguments                                             Variable        false           0               9114            [Lorg.eclipse.milo.opcua.stack.core.types.builtin.ExtensionObject;@11de56e6
+ ActiveState                                                 Variable        false           0               AirConditioner_1.StateCondition.ActiveState LocalizedText{text=Active, locale=en}
+  Id                                                         Variable        false           0               AirConditioner_1.StateCondition.ActiveState.Id true           
+  TransitionTime                                             Variable        false           0               AirConditioner_1.StateCondition.ActiveState.TransitionTime DateTime{utcTime=132511963488200709, javaDate=Mon Nov 30 08:52:28 CET 2020}
+ EnabledState                                                Variable        false           0               AirConditioner_1.StateCondition.EnabledState LocalizedText{text=Enabled, locale=en}
+  Id                                                         Variable        false           0               AirConditioner_1.StateCondition.EnabledState.Id true           
+  EffectiveTransitionTime                                    Variable        false           0               AirConditioner_1.StateCondition.EnabledState.EffectiveTransitionTime DateTime{utcTime=132511963488200709, javaDate=Mon Nov 30 08:52:28 CET 2020}
+  TransitionTime                                             Variable        false           0               AirConditioner_1.StateCondition.EnabledState.TransitionTime DateTime{utcTime=132498794337475293, javaDate=Sun Nov 15 03:03:53 CET 2020}
+ InputNode                                                   Variable        false           0               AirConditioner_1.StateCondition.InputNode NodeId{ns=0, id=0}
+ SuppressedOrShelved                                         Variable        false           0               AirConditioner_1.StateCondition.SuppressedOrShelved false          
+ PlaceInService                                              Method          false           0               17870           -              
+ RemoveFromService                                           Method          false           0               17869           -              
+ Reset                                                       Method          false           0               18199           -              
+ Silence                                                     Method          false           0               16402           -              
+ Suppress                                                    Method          false           0               16403           -              
+ Unsuppress                                                  Method          false           0               17868           -              
+ NormalState                                                 Variable        false           0               AirConditioner_1.StateCondition.NormalState NodeId{ns=0, id=0}
+State                                                        Variable        false           3               AirConditioner_1.State 0              
+Temperature                                                  Variable        false           3               AirConditioner_1.Temperature -5.2017999997685775
+ EURange                                                     Variable        false           0               AirConditioner_1.Temperature.EURange ExtensionObject{encoded=ByteString{bytes=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 64]}, encodingId=NodeId{ns=0, id=886}}
+ EngineeringUnits                                            Variable        false           0               AirConditioner_1.Temperature.EngineeringUnits ExtensionObject{encoded=ByteString{bytes=[47, 0, 0, 0, 104, 116, 116, 112, 58, 47, 47, 119, 119, 119, 46, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 117, 110, 105, 116, 115, 47, 117, 110, 47, 99, 101, 102, 97, 99, 116, 72, 65, 70, 0, 2, 3, 0, 0, 0, -62, -80, 70, 2, 17, 0, 0, 0, 100, 101, 103, 114, 101, 101, 32, 70, 97, 104, 114, 101, 110, 104, 101, 105, 116]}, encodingId=NodeId{ns=0, id=889}}
+ HA Configuration                                            Object          false           0               1013            -              
+  AggregateConfiguration                                     Object          false           0               1013.AggregateConfiguration -              
+   PercentDataBad                                            Variable        false           0               1013.AggregateConfiguration.PercentDataBad 100            
+   PercentDataGood                                           Variable        false           0               1013.AggregateConfiguration.PercentDataGood 100            
+   TreatUncertainAsBad                                       Variable        false           0               1013.AggregateConfiguration.TreatUncertainAsBad true           
+   UseSlopedExtrapolation                                    Variable        false           0               1013.AggregateConfiguration.UseSlopedExtrapolation false          
+  Stepped                                                    Variable        false           0               1013.Stepped    false          
+TemperatureSetPoint                                          Variable        true            3               AirConditioner_1.TemperatureSetPoint -5.0           
+ EURange                                                     Variable        false           0               AirConditioner_1.TemperatureSetPoint.EURange ExtensionObject{encoded=ByteString{bytes=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 64]}, encodingId=NodeId{ns=0, id=886}}
+ EngineeringUnits                                            Variable        false           0               AirConditioner_1.TemperatureSetPoint.EngineeringUnits ExtensionObject{encoded=ByteString{bytes=[47, 0, 0, 0, 104, 116, 116, 112, 58, 47, 47, 119, 119, 119, 46, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 117, 110, 105, 116, 115, 47, 117, 110, 47, 99, 101, 102, 97, 99, 116, 72, 65, 70, 0, 2, 3, 0, 0, 0, -62, -80, 70, 2, 17, 0, 0, 0, 100, 101, 103, 114, 101, 101, 32, 70, 97, 104, 114, 101, 110, 104, 101, 105, 116]}, encodingId=NodeId{ns=0, id=889}}
+PowerConsumption                                             Variable        false           3               AirConditioner_1.PowerConsumption 0.0            
+Start                                                        Method          false           3               AirConditioner_1.Start -              
+Stop                                                         Method          false           3               AirConditioner_1.Stop -              
+Humidity                                                     Variable        false           3               AirConditioner_1.Humidity 24.203122000020166
+ EURange                                                     Variable        false           0               AirConditioner_1.Humidity.EURange ExtensionObject{encoded=ByteString{bytes=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 64]}, encodingId=NodeId{ns=0, id=886}}
+ EngineeringUnits                                            Variable        false           0               AirConditioner_1.Humidity.EngineeringUnits ExtensionObject{encoded=ByteString{bytes=[47, 0, 0, 0, 104, 116, 116, 112, 58, 47, 47, 119, 119, 119, 46, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 117, 110, 105, 116, 115, 47, 117, 110, 47, 99, 101, 102, 97, 99, 116, 49, 80, 0, 0, 2, 1, 0, 0, 0, 37, 2, 7, 0, 0, 0, 112, 101, 114, 99, 101, 110, 116]}, encodingId=NodeId{ns=0, id=889}}
+HumiditySetpoint                                             Variable        true            3               AirConditioner_1.HumiditySetpoint 22.0           
+ EURange                                                     Variable        false           0               AirConditioner_1.HumiditySetpoint.EURange ExtensionObject{encoded=ByteString{bytes=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 64]}, encodingId=NodeId{ns=0, id=886}}
+ EngineeringUnits                                            Variable        false           0               AirConditioner_1.HumiditySetpoint.EngineeringUnits ExtensionObject{encoded=ByteString{bytes=[47, 0, 0, 0, 104, 116, 116, 112, 58, 47, 47, 119, 119, 119, 46, 111, 112, 99, 102, 111, 117, 110, 100, 97, 116, 105, 111, 110, 46, 111, 114, 103, 47, 85, 65, 47, 117, 110, 105, 116, 115, 47, 117, 110, 47, 99, 101, 102, 97, 99, 116, 49, 80, 0, 0, 2, 1, 0, 0, 0, 37, 2, 7, 0, 0, 0, 112, 101, 114, 99, 101, 110, 116]}, encodingId=NodeId{ns=0, id=889}}
+StartWithSetpoint                                            Method          false           3               AirConditioner_1.StartWithSetpoint -              
+ InputArguments                                              Variable        false           0               AirConditioner_1.StartWithSetpoint.StartWithSetpoint [Lorg.eclipse.milo.opcua.stack.core.types.builtin.ExtensionObject;@1f387978
