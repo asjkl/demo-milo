@@ -12,7 +12,7 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import client.SynchronousClient;
 import utils.Constants;
 
-public class ClientWriter {
+public class Writer {
     
     private static Integer namespace =3;
     private static String nodeId = "AirConditioner_1.TemperatureSetPoint";
