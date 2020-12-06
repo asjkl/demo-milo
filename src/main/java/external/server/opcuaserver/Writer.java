@@ -1,5 +1,6 @@
 package external.server.opcuaserver;
 
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import org.eclipse.milo.opcua.sdk.client.AddressSpace;
@@ -16,10 +17,11 @@ public class Writer {
     
     private static Integer namespace =3;
     private static String nodeId = "AirConditioner_1.TemperatureSetPoint";
+    private static int numWrite = 10;
     
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException  {
 	final String endpoint = String.format("opc.tcp://%s:%s%s", "opcuaserver.com", 48010, "/test");
-	
+	//final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
 	//Creiamo una connessione sincrona con il server OPC
 	OpcUaClient opcUaClient = SynchronousClient.connect(endpoint);
 	
@@ -35,10 +37,16 @@ public class Writer {
 	System.out.println(testNode.readValue().getValue().getValue());
 	
 	//Scriviamo il valore del nodo variabile (in caso di errori viene sollevata un'eccezione)
-	testNode.writeValue(new Variant(0));
-	
+	while(numWrite>0) {
+	    try {
+		testNode.writeValue(new Variant(1));
+	    }catch (Exception e) {
+		System.err.println(e.toString());
+	    }	
 	//Stampiamo il valore del nodo dopo la scrittura
 	System.out.println(testNode.readValue().getValue().getValue());
+	numWrite--;
+	}
 	
 	opcUaClient.disconnect();
     }
