@@ -1,4 +1,4 @@
-package sterfive;
+package external.server.sterfive;
 
 import java.util.concurrent.ExecutionException;
 
@@ -18,7 +18,7 @@ public class ClientWriter {
     private static String nodeId="Scalar_Simulation_Number";
     
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException  {
-	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOSTSTERFIVE, Constants.PORTSTERFIVE, Constants.PATHSTERFIVE);
+	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST_STERFIVE, Constants.PORT_STERFIVE, Constants.PATH_STERFIVE);
 	
 	//Creiamo una connessione sincrona con il server OPC
 	OpcUaClient opcUaClient = SynchronousClient.connect(endpoint);

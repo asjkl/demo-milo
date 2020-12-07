@@ -35,7 +35,7 @@ public class ClientWriter {
 	System.out.println(testNode.readValue().getValue().getValue());
 	
 	//Scriviamo il valore del nodo variabile (in caso di errori viene sollevata un'eccezione)
-	testNode.writeValue(new Variant(15));
+	testNode.writeValue(new Variant(12));
 	
 	//Stampiamo il valore del nodo dopo la scrittura
 	System.out.println(testNode.readValue().getValue().getValue());

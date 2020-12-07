@@ -9,6 +9,7 @@ import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.sdk.client.nodes.UaNode;
 import org.eclipse.milo.opcua.sdk.client.nodes.UaVariableNode;
 import org.eclipse.milo.opcua.sdk.core.AccessLevel;
+import org.eclipse.milo.opcua.stack.core.Identifiers;
 import org.eclipse.milo.opcua.stack.core.UaException;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.NodeClass;
@@ -17,8 +18,8 @@ import client.SynchronousClient;
 import utils.Constants;
 
 public class ClientReader {
-    private static Integer namespace =2;
-    private static String nodeId="HelloWorld";
+    private static Integer namespace =0;
+    private static Integer nodeId=87;
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException {
 	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST, Constants.PORT, Constants.PATH);
 	
@@ -52,7 +53,7 @@ public class ClientReader {
 	    
 	    for (UaNode uaNode : nodes) {
 		stampa(uaNode, spazio);
-		broswe(uaNode, addressSpace, spazio+" ");
+		//broswe(uaNode, addressSpace, spazio+" ");
 	    }
     }
     

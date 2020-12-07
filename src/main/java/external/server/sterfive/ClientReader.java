@@ -1,4 +1,4 @@
-package sterfive;
+package external.server.sterfive;
 
 import java.util.List;
 import java.util.Set;
@@ -21,7 +21,7 @@ public class ClientReader {
     private static Integer namespace =1;
     private static String nodeId="HelloWorld";
     public static void main(String[] args) throws UaException, InterruptedException, ExecutionException {
-	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOSTSTERFIVE, Constants.PORTSTERFIVE, Constants.PATHSTERFIVE);
+	final String endpoint = String.format("opc.tcp://%s:%s%s", Constants.HOST_STERFIVE, Constants.PORT_STERFIVE, Constants.PATH_STERFIVE);
 	
 	ClientReader reader = new ClientReader();
 	
@@ -34,7 +34,7 @@ public class ClientReader {
 	AddressSpace addressSpace = opcUaClient.getAddressSpace();
 	
 	//Dal address space prendiamo il nodo da cui vogliamo partire (per esempio nodo radice)
-	UaNode serverNode = addressSpace.getNode(Identifiers.Server);
+	UaNode serverNode = addressSpace.getNode(Identifiers.RootFolder);
 	
 	System.out.format("%-60s %-15s %-15s %-15s %-15s %-15s%n", "NodeName", "NodeType","NodeWritable", "NameSpaceIndex", "NodeId", "Value");
 	System.out.println("-----------------------------------------------------------------------------------------------------------------");
@@ -53,7 +53,7 @@ public class ClientReader {
 	    
 	    for (UaNode uaNode : nodes) {
 		stampa(uaNode, spazio);
-		broswe(uaNode, addressSpace, spazio+" ");
+		//broswe(uaNode, addressSpace, spazio+" ");
 	    }
     }
     

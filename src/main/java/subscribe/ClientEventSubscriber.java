@@ -17,8 +17,10 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.stack.core.types.builtin.QualifiedName;
 import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
+import org.eclipse.milo.opcua.stack.core.types.enumerated.FilterOperator;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.MonitoringMode;
 import org.eclipse.milo.opcua.stack.core.types.structured.ContentFilter;
+import org.eclipse.milo.opcua.stack.core.types.structured.ContentFilterElement;
 import org.eclipse.milo.opcua.stack.core.types.structured.EventFilter;
 import org.eclipse.milo.opcua.stack.core.types.structured.ModifySubscriptionResponse;
 import org.eclipse.milo.opcua.stack.core.types.structured.SimpleAttributeOperand;
@@ -97,10 +99,8 @@ public class ClientEventSubscriber implements Runnable {
 		            AttributeId.Value.uid(),
 		            null)
 		    },
-		    new ContentFilter(null)
-		);
-	
-	ManagedEventItem eventItem = subscription.createEventItem(Identifiers.Server, eventFilter);
+		    new ContentFilter(null));
+	ManagedEventItem eventItem = subscription.createEventItem(Identifiers.EventQueueOverflowEventType, eventFilter);
 		
 	//Aggiungiamo al gestore di sottoscrizioni le reazioni a determinati eventi
 	subscription.addChangeListener(new ChangeListener() {

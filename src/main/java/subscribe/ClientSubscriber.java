@@ -29,13 +29,13 @@ public class ClientSubscriber implements Runnable {
     private String nodeId="HelloWorld/ScalarTypes/Int32";
     
     //Il tempo (espresso in ms) che passa prima che il subscriber richieda eventuali aggiornamenti al server
-    private Integer publishingInterval= 5000;
+    private Integer publishingInterval= 50000;
     
     //Il tempo (espresso in ms) che passa prima che il server controlli eventuali cambiamenti dell'elemento da monitorare
-    private Double samplingInterval= 3000.0;
+    private Double samplingInterval= 0.0;
     
     //La dimensione della coda rappresenta quanti cambiamenti di valore possono essere salvati prima di applicare una policy di discard
-    private Integer queueSize= 5;
+    private Integer queueSize= 1;
     
     //La policy di discard da applicare
     private Boolean discardOldest=true;
@@ -62,7 +62,7 @@ public class ClientSubscriber implements Runnable {
 	ManagedDataItem dataItem = subscription.createDataItem(new NodeId(namespace,nodeId ));
 	dataItem.setSamplingInterval(samplingInterval);
 	dataItem.setQueueSize(UInteger.valueOf(queueSize));
-	dataItem.setDiscardOldest(discardOldest);
+	//dataItem.setDiscardOldest(discardOldest);
 	dataItem.setMonitoringMode(monitoringMode);
 	
 	//Aggiungiamo al gestore di sottoscrizioni le reazioni a determinati eventi

@@ -2,6 +2,7 @@ package client;
 
 import java.util.concurrent.ExecutionException;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
+import org.eclipse.milo.opcua.sdk.client.api.identity.UsernameProvider;
 import org.eclipse.milo.opcua.stack.core.UaException;
 import org.eclipse.milo.opcua.stack.core.security.SecurityPolicy;
 
@@ -16,7 +17,7 @@ public class SynchronousClient {
 		            .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getUri()))
 		            .findFirst(),
 		    configBuilder ->
-		        configBuilder.build()
+		        configBuilder/*.setIdentityProvider(new UsernameProvider("user", "password1"))*/.build()
 		);
 	return (OpcUaClient) client.connect().get();
     }
