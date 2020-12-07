@@ -17,6 +17,8 @@ import org.eclipse.milo.opcua.stack.core.types.builtin.unsigned.UInteger;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.MonitoringMode;
 import org.eclipse.milo.opcua.stack.core.types.structured.ModifySubscriptionResponse;
 
+import ch.qos.logback.core.status.Status;
+import ch.qos.logback.core.status.StatusListener;
 import client.SynchronousClient;
 import utils.Constants;
 
@@ -29,10 +31,10 @@ public class Subscriber implements Runnable {
     private static String nodeId = "AirConditioner_1.Temperature";
  
     //Il tempo (espresso in ms) che passa prima che il subscriber richieda eventuali aggiornamenti al server
-    private Integer publishingInterval= 1;
+    private Integer publishingInterval= 2000;
     
     //Il tempo (espresso in ms) che passa prima che il server controlli eventuali cambiamenti dell'elemento da monitorare
-    private Double samplingInterval= 1.0;
+    private Double samplingInterval= 1000.0;
     
     //La dimensione della coda rappresenta quanti cambiamenti di valore possono essere salvati prima di applicare una policy di discard
     private Integer queueSize= 5;
@@ -65,6 +67,9 @@ public class Subscriber implements Runnable {
 	dataItem.setDiscardOldest(discardOldest);
 	dataItem.setMonitoringMode(monitoringMode);
 	
+	//ManagedSubscription.StatusListener
+	//subscription.addStatusListener();     // StatusListener statusListener)
+	
 	//Aggiungiamo al gestore di sottoscrizioni le reazioni a determinati eventi
 	subscription.addChangeListener(new ChangeListener() {
 	    	
@@ -72,10 +77,11 @@ public class Subscriber implements Runnable {
 	    	//stampiamo il valore aggiornato
     	        @Override
     	        public void onDataReceived(List<ManagedDataItem> dataItems, List<DataValue> dataValues) {
-    	            System.out.println("->"+dataValues.get(0).getValue().getValue());           
-    	            if(dataValues.get(0).getValue().getValue().equals(-1)) {
-    	        	exit = true;
-    	            }
+    	            System.out.print("Dato ricevuto: ");
+    	            for (DataValue dataValue : dataValues) {
+    	        	System.out.print(dataValue.getValue().getValue()+" ");           
+		    }
+    	            System.out.println();
     	        }
     	        
     	    });

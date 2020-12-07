@@ -42,11 +42,12 @@ public class Reader {
 	
 	//Dal address space prendiamo il nodo da cui vogliamo partire (per esempio nodo radice)
 	NodeId node = new NodeId(namespace, nodeId);
-	UaNode serverNode = addressSpace.getNode(new NodeId(Unsigned.ushort(namespace), nodeId));				// new NodeId(Unsigned.ushort(namespace), nodeId)
+	UaNode serverNode = addressSpace.getNode(new NodeId(namespace, nodeId));				
 	
 	System.out.format("%-60s %-15s %-15s %-15s %-15s %-15s%n", "NodeName", "NodeType","NodeWritable", "NameSpaceIndex", "NodeId", "Value");
 	System.out.println("-----------------------------------------------------------------------------------------------------------------");
 	reader.stampa(serverNode, spazio);
+	spazio =" ";
 	
 	//Esploriamo l'address space a partire dal nodo scelto
 	reader.broswe(serverNode, addressSpace, spazio);
