@@ -17,7 +17,12 @@ public class SynchronousClient {
 		            .filter(e -> e.getSecurityPolicyUri().equals(SecurityPolicy.None.getUri()))
 		            .findFirst(),
 		    configBuilder ->
-		        configBuilder/*.setIdentityProvider(new UsernameProvider("user", "password1"))*/.build()
+		        configBuilder/*.setIdentityProvider(new UsernameProvider("user", "password1"))
+		        	       .setKeepAliveTimeout(1000)
+		        	       .setAcknowledgeTimeout(1000)
+		        	     */
+		        	    .build()
+		        
 		);
 	return (OpcUaClient) client.connect().get();
     }
